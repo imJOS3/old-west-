@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Rye&family=Alex+Brush&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+:root {
+  --color-ink: #15110D;
+  --color-surface: #221A14;
+  --color-surface-alt: #2C2119;
+  --color-parchment: #F3EDE0;
+  --color-muted: #A99880;
+  --color-brass: #C9A227;
+  --color-barber-red: #A13D3D;
+  --color-line: #3B2C22;
+}
+
+body {
+  background-color: var(--color-ink);
+  color: var(--color-parchment);
+  font-family: 'Inter', sans-serif;
+}
+
+.font-display {
+  font-family: 'Rye', serif;
+  letter-spacing: 0.02em;
+}
+
+.font-script {
+  font-family: 'Alex Brush', cursive;
+}
+
+.font-mono {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.texture-canvas {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.015) 0px,
+    rgba(255, 255, 255, 0.015) 1px,
+    transparent 1px,
+    transparent 6px
+  );
+}
+
+.emblem {
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  border: 1.5px solid var(--color-brass);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .emblem {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.barber-stripe {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--color-barber-red) 0px,
+    var(--color-barber-red) 10px,
+    var(--color-brass) 10px,
+    var(--color-brass) 20px,
+    var(--color-parchment) 20px,
+    var(--color-parchment) 30px
+  );
+  background-size: 42px 42px;
+}
+
+.barber-stripe-animated {
+  animation: pole-spin 3s linear infinite;
+}
+
+@keyframes pole-spin {
+  from { background-position: 0 0; }
+  to { background-position: 42px 0; }
+}
+
+/* Entrada suave al cargar la página */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.8s ease both;
+}
+
+/* Revelado al hacer scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reacción al pasar el mouse sobre tarjetas */
+.hover-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.5);
+  border-color: var(--color-brass);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barber-stripe-animated,
+  .animate-fade-up {
+    animation: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .hover-lift {
+    transition: none;
+  }
+  .barber-photo::after {
+    transition: none;
+    display: none;
+  }
+  /* Efecto de iluminación sobre la foto del barbero */
+.barber-photo {
+  position: relative;
+  overflow: hidden;
+}
+
+.barber-photo::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(201, 162, 39, 0) 35%,
+    rgba(255, 244, 214, 0.5) 50%,
+    rgba(201, 162, 39, 0) 65%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.7s ease;
+  pointer-events: none;
+}
+
+.group:hover .barber-photo::after {
+  left: 125%;
+}
+
+.barber-photo-glow {
+  transition: box-shadow 0.4s ease;
+}
+
+.group:hover .barber-photo-glow {
+  box-shadow: inset 0 0 40px 6px rgba(201, 162, 39, 0.35);
+}
+}

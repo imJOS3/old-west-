@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Rol {
+  CLIENTE
+  BARBERO
+  ADMIN
+}
+
+enum EstadoReserva {
+  PENDIENTE
+  CONFIRMADA
+  COMPLETADA
+  CANCELADA
+}
+
+model Usuario {
+  id        String   @id @default(cuid())
+  nombre    String
+  email     String   @unique
+  password  String
+  rol       Rol      @default(CLIENTE)
+  creadoEn  DateTime @default(now())
+
+  barbero   Barbero?
+  reservas  Reserva[]
+}
+
+model Barbero {
+  id           String   @id @default(cuid())
+  usuarioId    String   @unique
+  usuario      Usuario  @relation(fields: [usuarioId], references: [id])
+  especialidad String?
+  fotoUrl      String?
+
+  reservas         Reserva[]
+  cortesRealizados CorteRealizado[]
+}
+
+model Servicio {
+  id          String   @id @default(cuid())
+  nombre      String
+  descripcion String?
+  precio      Float
+  duracionMin Int      @default(30)
+
+  reservas         Reserva[]
+  cortesRealizados CorteRealizado[]
+}
+
+model Reserva {
+  id         String        @id @default(cuid())
+  clienteId  String
+  cliente    Usuario       @relation(fields: [clienteId], references: [id])
+  barberoId  String
+  barbero    Barbero       @relation(fields: [barberoId], references: [id])
+  servicioId String
+  servicio   Servicio      @relation(fields: [servicioId], references: [id])
+  fecha      DateTime
+  estado     EstadoReserva @default(PENDIENTE)
+  creadoEn   DateTime      @default(now())
+}
+
+model CorteRealizado {
+  id         String   @id @default(cuid())
+  barberoId  String
+  barbero    Barbero  @relation(fields: [barberoId], references: [id])
+  servicioId String
+  servicio   Servicio @relation(fields: [servicioId], references: [id])
+  fotoUrl    String?
+  destacado  Boolean  @default(false)
+  fecha      DateTime @default(now())
+}
