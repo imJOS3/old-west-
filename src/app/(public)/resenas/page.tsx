@@ -390,7 +390,7 @@ export default function ResenasPage() {
             <p className="text-[var(--color-muted)] mb-6 max-w-md mx-auto text-sm">
               Reserva con tu barbero de confianza y asegura tu silla.
             </p>
-            <Link href="/reservas/nueva" className={`inline-block ${btnPrimario} px-8 py-3 text-sm`}>
+            <Link href="/reservas" className={`inline-block ${btnPrimario} px-8 py-3 text-sm`}>
               Agendar cita
             </Link>
           </div>

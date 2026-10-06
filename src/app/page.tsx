@@ -72,7 +72,7 @@ export default function HomePage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover scale-105"
+            className="object-cover scale-105"  
           />
         </div>
         <div className="absolute inset-0 bg-[var(--color-ink)]/78" />
@@ -143,7 +143,7 @@ export default function HomePage() {
                 experiencia: buena luz, buena música y la comodidad de
                 sentirte en casa mientras te atendemos.
               </p>
-              <Link href="/reservas/nueva" className={`inline-block ${btnPrimario} px-6 py-3 text-sm`}>
+              <Link href="/reservas" className={`inline-block ${btnPrimario} px-6 py-3 text-sm`}>
                 Conócenos, reserva ya
               </Link>
             </div>
@@ -176,7 +176,7 @@ export default function HomePage() {
                   <h3 className="font-display text-2xl mb-1">{b.nombre}</h3>
                   <p className="text-[var(--color-muted)] text-sm mb-4">{b.especialidad}</p>
                   <Link
-                    href={`/reservas/nueva?barbero=${b.id}`}
+                    href={`/reservas`}
                     className="mt-auto text-center bg-[var(--color-brass)] text-[var(--color-ink)] font-semibold py-2.5 rounded-sm hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-transform font-mono text-xs uppercase tracking-wide"
                   >
                     Reservar con {b.nombre.split(' ')[0]}

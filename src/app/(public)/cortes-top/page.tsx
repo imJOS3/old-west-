@@ -52,7 +52,7 @@ export default function CortesTopPage() {
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
           {cortes.map((c, i) => (
             <Reveal key={c.id} delay={i * 80}>
-              <a href="/reservas/nueva" className="block">
+              <a href="/reservas" className="block">
                 <PhotoFrame
                   src={c.foto}
                   alt={`${c.estilo} por ${c.barbero}`}
