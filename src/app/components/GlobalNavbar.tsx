@@ -8,8 +8,8 @@ import { ArrowLeft, Menu, X } from 'lucide-react'
 const links = [
   { label: 'Inicio', href: '/' },
   { label: 'Cortes top', href: '/cortes-top' },
-  { label: 'Registrarme', href: '/registro' },
-  { label: 'Reservar', href: '/reservas/nueva' },
+  { label: 'Reseñas', href: '/resenas' },
+  { label: 'Reservar', href: '/reservas' },
 ]
 
 export default function GlobalNavbar() {
@@ -17,18 +17,36 @@ export default function GlobalNavbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [canGoBack, setCanGoBack] = useState(false)
 
+  const [atTop, setAtTop] = useState(true)
+
   useEffect(() => {
     setCanGoBack(window.history.length > 1)
   }, [])
 
+  useEffect(() => {
+    const onScroll = () => setAtTop(window.scrollY < 10)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--color-line)] bg-[var(--color-ink)]/95 backdrop-blur-md">
+      {/* Franja de poste de barbero */}
+      <div
+        className={`absolute bottom-0 left-0 w-full h-1 barber-stripe barber-stripe-animated pointer-events-none transition-opacity duration-300 ${
+          atTop ? 'opacity-100' : 'opacity-0'
+        }`}
+        aria-hidden="true"
+      />
+
       <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-4">
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={() => router.back()}
             disabled={!canGoBack}
+            aria-label="Volver"
             className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-[var(--color-line)] bg-[var(--color-surface)] text-[var(--color-parchment)] transition hover:border-[var(--color-brass)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
           >
             <ArrowLeft size={18} />
@@ -61,7 +79,11 @@ export default function GlobalNavbar() {
         </button>
       </div>
 
-      <div className={`${menuOpen ? 'max-h-60 opacity-100 py-3' : 'max-h-0 opacity-0 py-0'} overflow-hidden transition-all duration-300 md:hidden`}>
+      <div
+        className={`${
+          menuOpen ? 'max-h-60 opacity-100 py-3' : 'max-h-0 opacity-0 py-0'
+        } overflow-hidden transition-all duration-300 md:hidden`}
+      >
         <nav className="flex flex-col gap-3 px-4 pb-4">
           {links.map((link) => (
             <Link

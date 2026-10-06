@@ -1,18 +1,32 @@
+import Image from 'next/image'
+import PhotoFrame from '@/app/components/PhotoFrame'
 import Reveal from '@/components/Reveal'
 
 const cortes = [
-  { id: 1, barbero: 'Carlos Rueda', estilo: 'Fade bajo' },
-  { id: 2, barbero: 'Miguel Soto', estilo: 'Diseño con línea' },
-  { id: 3, barbero: 'Andrés Peña', estilo: 'Clásico con raya' },
-  { id: 4, barbero: 'Carlos Rueda', estilo: 'Fade alto + barba' },
-  { id: 5, barbero: 'Miguel Soto', estilo: 'Textura arriba' },
-  { id: 6, barbero: 'Andrés Peña', estilo: 'Pompadour' },
+  { id: 1, barbero: 'Carlos Rueda', estilo: 'Fade bajo', foto: '/images/cortes/fade-bajo.jpg' },
+  { id: 2, barbero: 'Miguel Soto', estilo: 'Diseñ o con línea', foto: '/images/cortes/diseno-linea.jpg' },
+  { id: 3, barbero: 'Andrés Peña', estilo: 'Clásico con raya', foto: '/images/cortes/clasico-raya.jpg' },
+  { id: 4, barbero: 'Carlos Rueda', estilo: 'Fade alto + barba', foto: '/images/cortes/fade-barba.jpg' },
+  { id: 5, barbero: 'Miguel Soto', estilo: 'Textura arriba', foto: '/images/cortes/textura.jpg' },
+  { id: 6, barbero: 'Andrés Peña', estilo: 'Pompadour', foto: '/images/cortes/pompadour.jpg' },
 ]
 
 export default function CortesTopPage() {
   return (
     <main className="min-h-screen bg-[var(--color-ink)] texture-canvas">
-      <section className="border-b border-[var(--color-line)] px-4 py-14 sm:py-16 text-center">
+      <section className="relative overflow-hidden border-b border-[var(--color-line)] px-4 py-14 sm:py-16 text-center">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/cortes/fade-barba.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-25"
+          />
+        </div>
+        <div className="absolute top-0 left-0 w-full h-1 " />
+        <div className="relative z-10">
         <p className="font-mono text-xs text-[var(--color-brass)] tracking-widest uppercase mb-3 animate-fade-up">
           Barbería · Bogotá
         </p>
@@ -30,42 +44,32 @@ export default function CortesTopPage() {
         >
           Reservar ahora
         </a>
+        </div>
       </section>
 
       <section className="px-4 py-12 max-w-6xl mx-auto">
         <h2 className="font-display text-3xl mb-6">Cortes top</h2>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
           {cortes.map((c, i) => (
             <Reveal key={c.id} delay={i * 80}>
-              <div className="hover-lift group relative aspect-[3/4] rounded-sm overflow-hidden border border-[var(--color-line)] bg-[var(--color-surface)]">
-                <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-surface-alt)] to-[var(--color-ink)]" />
-                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
-                  <p className="text-sm font-medium">{c.estilo}</p>
-                  <p className="font-mono text-xs text-[var(--color-brass)]">{c.barbero}</p>
-                </div>
-                <div className="absolute top-0 left-0 w-1 h-full barber-stripe opacity-0 group-hover:opacity-100 transition" />
-              </div>
+              <a href="/reservas/nueva" className="block">
+                <PhotoFrame
+                  src={c.foto}
+                  alt={`${c.estilo} por ${c.barbero}`}
+                  sizes="(min-width: 768px) 30vw, (min-width: 640px) 50vw, 100vw"
+                  aspectClass="aspect-[3/4]"
+                >
+                  <div className="absolute bottom-0 left-0 right-0 z-[3] p-4 bg-gradient-to-t from-black/85 via-black/40 to-transparent translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
+                    <p className="text-sm font-medium">{c.estilo}</p>
+                    <p className="font-mono text-xs text-[var(--color-brass)]">{c.barbero}</p>
+                  </div>
+                </PhotoFrame>
+              </a>
             </Reveal>
           ))}
         </div>
       </section>
 
-      <section className="px-4 py-12 border-t border-[var(--color-line)]">
-        <div className="max-w-6xl mx-auto grid sm:grid-cols-2 md:grid-cols-3 gap-8 font-mono text-sm text-center sm:text-left">
-          <div>
-            <p className="text-[var(--color-brass)] uppercase text-xs mb-2">Dirección</p>
-            <p className="text-[var(--color-muted)]">Calle 123 #45-67, Bogotá</p>
-          </div>
-          <div>
-            <p className="text-[var(--color-brass)] uppercase text-xs mb-2">Horario</p>
-            <p className="text-[var(--color-muted)]">Lun - Sáb · 9:00 - 19:00</p>
-          </div>
-          <div>
-            <p className="text-[var(--color-brass)] uppercase text-xs mb-2">Contacto</p>
-            <p className="text-[var(--color-muted)]">300 123 4567</p>
-          </div>
-        </div>
-      </section>
     </main>
   )
 }

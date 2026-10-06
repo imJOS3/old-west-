@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import GlobalNavbar from '@/app/components/GlobalNavbar'
 import WhatsAppButton from '@/app/components/WhatsAppButton'
+import Footer from './components/Footer'
 
 export const metadata: Metadata = {
   title: 'El Corte Barbería | Reservas y cortes top',
@@ -19,6 +20,7 @@ export default function RootLayout({
         <GlobalNavbar />
         {children}
         <WhatsAppButton />
+        <Footer />
       </body>
     </html>
   )

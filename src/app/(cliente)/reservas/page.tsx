@@ -3,13 +3,13 @@
 import { Suspense, useState } from 'react'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
+import { xAxisDefaultProps } from 'recharts/types/cartesian/XAxis'
 
 const barberos = [
   { id: '1', nombre: 'Carlos Rueda', especialidad: 'Fade & barba', foto: null as string | null },
   { id: '2', nombre: 'Andrés Peña', especialidad: 'Clásico', foto: null as string | null },
   { id: '3', nombre: 'Miguel Soto', especialidad: 'Diseño y líneas', foto: null as string | null },
-  // Cuando tengas la foto real, cambia el "null" por la ruta, ej:
-  // { id: '1', nombre: 'Carlos Rueda', especialidad: 'Fade & barba', foto: '/images/barberos/carlos.jpg' },
+ 
 ]
 
 const horas = ['9:00', '10:00', '11:00', '2:00', '3:00', '4:00', '5:00']
@@ -25,7 +25,6 @@ function NuevaReservaContent() {
 
   const [barberoId, setBarberoId] = useState(inicial)
   const [hora, setHora] = useState<string | null>(null)
-
   const barbero = barberos.find((b) => b.id === barberoId)!
 
   return (
